@@ -9,7 +9,7 @@ fi
 
 # Options: 0 (Performance), 1 (Balanced), 2 (Quality), 3 (Auto)
 DLSS_MODE=0  # Set DLSS mode to Performance
-HEADLESS=true
+HEADLESS=false
 
 # Set headless flag based on HEADLESS variable
 if [ "$HEADLESS" = "true" ]; then
@@ -42,7 +42,7 @@ OUTPUT_NO_DISTRACTORS="${PWD}/palletjack_data/no_distractors"
 
 
 # set CPU to performance mode before running Isaac Sim
-# sudo cpupower frequency-set -g performance
+sudo cpupower frequency-set -g performance
 
 ## Go to Isaac Sim location for running with ./python.sh
 cd $ISAAC_SIM_PATH
