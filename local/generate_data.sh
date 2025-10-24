@@ -8,8 +8,15 @@ if [ $# -eq 0 ]; then
 fi
 
 # Options: 0 (Performance), 1 (Balanced), 2 (Quality), 3 (Auto)
-DLSS_MODE=2  # Set DLSS mode to Quality
+DLSS_MODE=0  # Set DLSS mode to Performance
 HEADLESS=true
+
+# Set headless flag based on HEADLESS variable
+if [ "$HEADLESS" = "true" ]; then
+    HEADLESS_FLAG="--headless true"
+else
+    HEADLESS_FLAG=""
+fi
 
 # This is the path where Isaac Sim is installed which contains the python.sh script
 ISAAC_SIM_PATH="$1"
@@ -35,7 +42,7 @@ OUTPUT_NO_DISTRACTORS="${PWD}/palletjack_data/no_distractors"
 
 
 # set CPU to performance mode before running Isaac Sim
-sudo cpupower frequency-set -g performance
+# sudo cpupower frequency-set -g performance
 
 ## Go to Isaac Sim location for running with ./python.sh
 cd $ISAAC_SIM_PATH
@@ -44,11 +51,11 @@ start_time=$(date +%s)
 
 echo "Starting Data Generation using Isaac Sim at: $ISAAC_SIM_PATH"  
 
-./python.sh $SCRIPT_PATH --headless $HEADLESS --dlss $DLSS_MODE --height 544 --width 960 --num_frames 2000 --distractors warehouse --data_dir $OUTPUT_WAREHOUSE
+./python.sh $SCRIPT_PATH $HEADLESS_FLAG --dlss $DLSS_MODE --height 544 --width 960 --num_frames 2000 --distractors warehouse --data_dir $OUTPUT_WAREHOUSE
 
-./python.sh $SCRIPT_PATH --headless $HEADLESS --dlss $DLSS_MODE --height 544 --width 960 --num_frames 2000 --distractors additional --data_dir $OUTPUT_ADDITIONAL
+./python.sh $SCRIPT_PATH $HEADLESS_FLAG --dlss $DLSS_MODE --height 544 --width 960 --num_frames 2000 --distractors additional --data_dir $OUTPUT_ADDITIONAL
 
-./python.sh $SCRIPT_PATH --headless $HEADLESS --dlss $DLSS_MODE --height 544 --width 960 --num_frames 1000 --distractors None --data_dir $OUTPUT_NO_DISTRACTORS
+./python.sh $SCRIPT_PATH $HEADLESS_FLAG --dlss $DLSS_MODE --height 544 --width 960 --num_frames 1000 --distractors None --data_dir $OUTPUT_NO_DISTRACTORS
 
 end_time=$(date +%s)
 
