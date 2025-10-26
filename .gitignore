@@ -1,1 +1,4 @@
 palletjack_sdg/palletjack_data
+local/.ipynb_checkpoints
+local/training/*
+!local/training/specs
